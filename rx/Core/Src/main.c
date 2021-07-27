@@ -31,6 +31,8 @@
 #include "led.h"
 #include "tty.h"
 #include "receiver.h"
+#include "sin_lut.h"
+#include "wavegen.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -102,6 +104,7 @@ int main(void)
 
   delay_init();
   receiver_init();
+  wavegen_init();
 
   LED_SetColor(LED_G);
   /* USER CODE END 2 */
@@ -110,7 +113,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    wavegen_synthesize(255);
     receiver_data_process();
+    delay_ms(5);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
