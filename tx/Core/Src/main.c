@@ -30,6 +30,7 @@
 #include "delay.h"
 #include "led.h"
 #include "tty.h"
+#include "listen.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -104,8 +105,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  uint8_t res;
   while (1)
   {
+    wait_for_signal();
+    res = decode_signal();
+    HAL_UART_Transmit(&huart3, &res, 1, 0xffff);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
