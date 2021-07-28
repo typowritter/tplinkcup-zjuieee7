@@ -20,8 +20,8 @@ extern "C" {
 #define PHASE_ACC_DEPTH  11
 #define PHASE_ACC_MAX    2048
 
-typedef uint16_t lut_index_t;
-typedef uint16_t dac_data_t;
+typedef uint32_t lut_index_t;
+typedef int16_t dac_data_t;
 
 dac_data_t get_lut_data(lut_index_t acc);
 
