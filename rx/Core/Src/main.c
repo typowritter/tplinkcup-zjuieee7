@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "dac.h"
+#include "dma.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -93,6 +94,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_DAC_Init();
   MX_TIM6_Init();
   MX_USART1_UART_Init();
@@ -110,16 +112,17 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   result_t res;
+  wavegen_freq_d();
   while (1)
   {
     res = receiver_data_process();
     if (res.is_valid)
     {
-      wavegen_synthesize(res.data & 0x0f);
-      wavegen_idle();
-      wavegen_synthesize(res.data & 0xf0);
+      wavegen_synthesize(res.data);
+      wavegen_freq_d();
+      wavegen_synthesize(res.data >> 4);
+      wavegen_freq_d();
     }
-    wavegen_idle();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

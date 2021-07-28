@@ -10,6 +10,9 @@ extern "C" {
 
 #define ddstim_dev    htim7
 #define dac_dev       hdac
+#define dac_dma_dev   hdma_dac_ch1
+
+extern DMA_HandleTypeDef hdma_dac_ch1;
 
 /**
  * 准备波形合成
@@ -21,9 +24,7 @@ void wavegen_init();
  */
 void wavegen_synthesize(uint8_t data);
 
-void wavegen_idle();
-
-void set_idle_offset();
+void wavegen_freq_d();
 
 #ifdef  __cplusplus
 }
