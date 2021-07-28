@@ -25,7 +25,7 @@ typedef uint16_t qsize_t;
 void queue_reset(void);
 
 /**
- * 处理完成的数据，通过此函数放入待发送队列
+ * UART接收的数据，通过此函数放入数据队列
  */
 void queue_push(qdata_t data);
 

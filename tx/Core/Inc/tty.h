@@ -21,8 +21,8 @@ extern "C" {
 #endif
 #pragma GCC diagnostic ignored "-Wformat"
 
-#include <stdio.h>
 #include "usart.h"
+#include <stdio.h>
 
 #define usart_dev               huart1
 

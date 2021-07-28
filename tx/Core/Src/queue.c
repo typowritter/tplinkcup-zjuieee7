@@ -9,7 +9,7 @@
 
 #include "queue.h"
 
-#define QUEUE_MAX_SIZE 20  /* 电脑端上行比特数不超过160 */
+#define QUEUE_MAX_SIZE 20  /* 电脑端下行比特数不超过160 */
 
 static struct
 {
@@ -27,7 +27,7 @@ void queue_reset()
 }
 
 /**
- * 处理完成的数据，通过此函数放入待发送队列
+ * UART接收的数据，通过此函数放入指令队列
  */
 void queue_push(qdata_t data)
 {

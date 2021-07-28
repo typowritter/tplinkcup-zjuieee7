@@ -13,7 +13,6 @@
   ******************************************************************************
   */
 #include <stdarg.h>
-#include <string.h>
 #include "tty.h"
 
 #define STR_BUFSIZE     100
@@ -119,7 +118,11 @@ int _read(int file, char *ptr, int len)
  */
 void putstr(char *ptr)
 {
-    HAL_UART_Transmit(&usart_dev, (uint8_t *)ptr, strlen(ptr), 0xFFFF);
+    while (*ptr != '\0')
+    {
+        PUTCHAR(*ptr);
+        ptr++;
+    }
 }
 
 /*
