@@ -238,13 +238,5 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     receiver_recv_cb();
   }
 }
-
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  if (htim == &ddstim_dev)
-  {
-    // set_dac_output();
-  }
-}
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

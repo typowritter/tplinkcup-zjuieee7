@@ -3,7 +3,7 @@
 #include "listen.h"
 #include "window.h"
 
-#define SAMPLING_RATE       292683  /* ADC 采样率 */
+#define SAMPLING_RATE       292683   /* ADC 采样率 */
 #define ADC_BUFLEN          1024     /* 约 3ms */
 #define IDLE_BUFLEN         (ADC_BUFLEN/8)  /* 约 0.4ms */
 
