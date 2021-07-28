@@ -62,10 +62,10 @@ void Error_Handler(void);
 #define LED_G_GPIO_Port GPIOB
 #define LED_B_Pin GPIO_PIN_1
 #define LED_B_GPIO_Port GPIOB
-#define RECV_TX_Pin GPIO_PIN_10
-#define RECV_TX_GPIO_Port GPIOB
-#define RECV_RX_Pin GPIO_PIN_11
-#define RECV_RX_GPIO_Port GPIOB
+#define SEND_TX_Pin GPIO_PIN_10
+#define SEND_TX_GPIO_Port GPIOB
+#define SEND_RX_Pin GPIO_PIN_11
+#define SEND_RX_GPIO_Port GPIOB
 #define DEBUG_TX_Pin GPIO_PIN_9
 #define DEBUG_TX_GPIO_Port GPIOA
 #define DEBUG_RX_Pin GPIO_PIN_10

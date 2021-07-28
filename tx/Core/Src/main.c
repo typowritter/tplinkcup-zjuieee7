@@ -19,7 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "dac.h"
+#include "adc.h"
 #include "dma.h"
 #include "tim.h"
 #include "usart.h"
@@ -30,9 +30,6 @@
 #include "delay.h"
 #include "led.h"
 #include "tty.h"
-#include "receiver.h"
-#include "sin_lut.h"
-#include "wavegen.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -95,17 +92,13 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_DAC_Init();
   MX_TIM6_Init();
   MX_USART1_UART_Init();
   MX_USART3_UART_Init();
-  MX_TIM7_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
   delay_init();
-  receiver_init();
-  wavegen_init();
-
   LED_SetColor(LED_G);
   /* USER CODE END 2 */
 
@@ -113,9 +106,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    wavegen_synthesize(255);
-    receiver_data_process();
-    delay_ms(5);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -131,6 +121,7 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -156,6 +147,12 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
   }
