@@ -7,6 +7,7 @@
 
 #define FREQ_POINTS         4  /* 同时处理4个频点 */
 #define PERIODS_PER_CYCLE   4  /* 使频率最低的分量有完整的4个周期 */
+// 提交后评论：在本题选择的几个频点下不太需要，设为1即可，具体见文档分析
 
 #define FREQ_1  4000
 #define FREQ_2  8000
@@ -19,8 +20,8 @@
 #define OUTPUT_BUFLEN   (DDS_SAMPLE_FREQ / FREQ_1 * PERIODS_PER_CYCLE)
 
 /* 待调整参数 */
-#define ELAP_SIGNAL   15  /* 有效信号持续时间 */
-#define ELAP_FREQ_D   22  /* 高低4字节间导频信号持续时间 */
+#define ELAP_SIGNAL   15  /* 有效信号持续时间(ms) */
+#define ELAP_FREQ_D   22  /* 高低4字节间导频信号持续时间(ms) */
 
 static const lut_index_t ftw[FREQ_POINTS] =
 {
@@ -42,6 +43,8 @@ void wavegen_init()
 
 /**
  * 根据收到的数据合成频率（小端格式，最低位代表最低频点）
+ *
+ * @note -- 仅处理低4位，忽略高4位数据
  */
 void wavegen_synthesize(uint8_t data)
 {
@@ -80,6 +83,12 @@ void wavegen_synthesize(uint8_t data)
   HAL_DAC_Stop_DMA(&dac_dev, DAC_CHANNEL_1);
 }
 
+/**
+ * 输出导频信号
+ *
+ * @note -- 在空闲状态，调用一次即可连续生成
+ *          在4比特传输间隙时，也能保证最小输出时间
+ */
 void wavegen_freq_d()
 {
   lut_index_t acc = 0;

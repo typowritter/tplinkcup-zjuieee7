@@ -13,13 +13,12 @@
 
 static uint16_t adc_buffer[ADC_BUFLEN];
 
-static double goertzel_power(int num, uint16_t freq, const uint16_t *data);
-static bool is_significent(double pwr);
-
 static const uint16_t freq_points[4] =
 {
   FREQ_1, FREQ_2, FREQ_3, FREQ_4
 };
+
+static double goertzel_power(int num, uint16_t freq, const uint16_t *data);
 
 void wait_for_signal()
 {
@@ -60,7 +59,7 @@ uint8_t decode_signal()
   for (int freq_ix = 4; freq_ix < 8; ++freq_ix)
   {
     pwr = goertzel_power(ADC_BUFLEN, freq_points[freq_ix-4], adc_buffer);
-    if (is_significent(pwr))
+    if (pwr > THRESH_SIGNAL)
       res |= (1<<freq_ix);
   }
 
@@ -84,9 +83,4 @@ static double goertzel_power(int num, uint16_t freq, const uint16_t *data)
     q1 = q0;
   }
   return q1*q1 + q2*q2 - coeff*q1*q2;
-}
-
-static bool is_significent(double pwr)
-{
-  return pwr > THRESH_SIGNAL;
 }
