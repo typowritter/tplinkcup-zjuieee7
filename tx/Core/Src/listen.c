@@ -46,7 +46,7 @@ uint8_t decode_signal()
   for (int freq_ix = 0; freq_ix < 4; ++freq_ix)
   {
     pwr = goertzel_power(ADC_BUFLEN, freq_points[freq_ix], adc_buffer);
-    if (is_significent(pwr))
+    if (pwr > THRESH_SIGNAL)
       res |= (1<<freq_ix);
   }
 
